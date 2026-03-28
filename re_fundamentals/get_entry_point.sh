@@ -20,11 +20,11 @@ if ! readelf -h "$file_name" >/dev/null 2>&1; then
     exit 1
 fi
 
-# 4. readelf vasitəsilə məlumatları çıxar və dəyişənlərə mənimsət
-magic_number=$(readelf -h "$file_name" | grep "Magic:" | sed 's/^ *Magic: *//')
-class=$(readelf -h "$file_name" | grep "Class:" | sed 's/^ *Class: *//')
-byte_order=$(readelf -h "$file_name" | grep "Data:" | sed 's/.*, //')
-entry_point_address=$(readelf -h "$file_name" | grep "Entry point address:" | sed 's/^ *Entry point address: *//')
+# 4. readelf vasitəsilə məlumatları çıxar (Sondakı boşluqlar təmizlənmiş şəkildə)
+magic_number=$(readelf -h "$file_name" | grep "Magic:" | sed 's/^ *Magic: *//' | sed 's/ *$//')
+class=$(readelf -h "$file_name" | grep "Class:" | awk '{print $2}')
+byte_order=$(readelf -h "$file_name" | grep "Data:" | sed 's/.*, //' | sed 's/ *$//')
+entry_point_address=$(readelf -h "$file_name" | grep "Entry point address:" | awk '{print $NF}')
 
 # 5. messages.sh faylını eyni mühitə daxil et (source)
 if [ -f "messages.sh" ]; then
