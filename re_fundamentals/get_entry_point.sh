@@ -23,7 +23,7 @@ fi
 # 4. readelf vasitəsilə məlumatları çıxar və dəyişənlərə mənimsət
 magic_number=$(readelf -h "$file_name" | grep "Magic:" | sed 's/^ *Magic: *//')
 class=$(readelf -h "$file_name" | grep "Class:" | sed 's/^ *Class: *//')
-byte_order=$(readelf -h "$file_name" | grep "Data:" | sed 's/^ *Data: *//')
+byte_order=$(readelf -h "$file_name" | grep "Data:" | sed 's/.*, //')
 entry_point_address=$(readelf -h "$file_name" | grep "Entry point address:" | sed 's/^ *Entry point address: *//')
 
 # 5. messages.sh faylını eyni mühitə daxil et (source)
